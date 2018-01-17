@@ -33,6 +33,7 @@ namespace SudokuSolverLib
             return groupedByValue.All(group => group.Count() == 1);
         }
 
+        // ReSharper disable once UnusedMember.Global
         public bool CheckComplete()
         {
             return _tiles.All(tile => tile.HasValue) && CheckValid();

@@ -142,14 +142,21 @@ namespace SudokuSolverLib
             }
         }
 
-        public void Output()
+        public string OutputSolution()
         {
+            var solution = string.Empty;
             for (var y = 0; y < _tiles.GetLength(1); y++)
             {
                 for (var x = 0; x < _tiles.GetLength(0); x++)
-                    Console.Write(_tiles[x, y].ToStringSimple());
-                Console.WriteLine();
+                    solution += _tiles[x, y].ToStringSimple();
+                solution += Environment.NewLine;
             }
+            return solution;
+        }
+
+        public SudokuTile[,] OutputTiles()
+        {
+            return _tiles;
         }
 
         public SudokuTile Tile(int x, int y)
@@ -202,10 +209,11 @@ namespace SudokuSolverLib
             }
         }
 
-        public void OutputRules()
+        public string OutputRulesToDialog()
         {
             foreach (var rule in _rules)
-                Console.WriteLine(string.Join(",", rule) + " - " + rule);
+                return string.Join(",", rule) + " - " + rule;
+            return string.Empty;
         }
     }
 }
