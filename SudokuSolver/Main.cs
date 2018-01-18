@@ -37,6 +37,9 @@ namespace SudokuSolver
             dialog.WriteLine("--");
             dialog.WriteLine("All " + solutions.Count + " solutions:");
             var i = 1;
+            if (solutions.Count == 0)
+                MessageBox.Show(@"No solution was found!", @"No solution found", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             var tiles = solutions[0].OutputTiles();
             FillTiles(tiles);
             foreach (var solution in solutions)
@@ -49,14 +52,23 @@ namespace SudokuSolver
 
         private void ButtonSolve_Click(object sender, EventArgs e)
         {
-            if (GetFieldCount() > 10)
+            try
             {
-                ColorSetTiles();
-                SolveSudoku();
+                if (GetFieldCount() > 10)
+                {
+                    ColorSetTiles();
+                    SolveSudoku();
+                }
+                else
+                {
+                    MessageBox.Show(@"Please fill more than 10 tiles!", @"Fill more than 10 tiles",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show(@"Bitte mehr als 10 Felder füllen!", @"Mehr als 10 Felder füllen", MessageBoxButtons.OK,
+                MessageBox.Show(ex.Message, ex.Message, MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
         }
@@ -1032,8 +1044,16 @@ namespace SudokuSolver
 
         private void ButtonReset_Click(object sender, EventArgs e)
         {
-            ResetTiles();
-            ResetTileColors();
+            try
+            {
+                ResetTiles();
+                ResetTileColors();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.Message, MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
     }
 }
