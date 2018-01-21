@@ -1,6 +1,6 @@
 # SudokuSolver
 
-SudokuSolver is a project written in C# 4.6.2. The software is used to solve sudokus.
+SudokuSolver is a project written in C# 4.7. The software is used to solve sudokus.
 
 [![Build status](https://ci.appveyor.com/api/projects/status/723lc47yl9icx3jq?svg=true)](https://ci.appveyor.com/project/SeppPenner/sudokusolver)
 [![GitHub issues](https://img.shields.io/github/issues/SeppPenner/SudokuSolver.svg)](https://github.com/SeppPenner/SudokuSolver/issues)
