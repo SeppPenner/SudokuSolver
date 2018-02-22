@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Languages.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,15 +14,18 @@ namespace SudokuSolverLib
 
         private int _rowAddIndex;
 
-        private SudokuBoard(SudokuBoard copy)
+        private readonly ILanguage _lang;
+
+        private SudokuBoard(SudokuBoard copy, ILanguage language)
         {
+            _lang = language;
             _maxValue = copy._maxValue;
             _tiles = new SudokuTile[copy.Width, copy.Height];
             CreateTiles();
             // Copy the tile values
             foreach (var pos in SudokuFactory.Box(Width, Height))
                 _tiles[pos.Item1, pos.Item2] =
-                    new SudokuTile(pos.Item1, pos.Item2, _maxValue) {Value = copy._tiles[pos.Item1, pos.Item2].Value};
+                    new SudokuTile(pos.Item1, pos.Item2, _maxValue, _lang) {Value = copy._tiles[pos.Item1, pos.Item2].Value};
 
             // Copy the rules
             foreach (var rule in copy._rules)
@@ -33,8 +37,9 @@ namespace SudokuSolverLib
             }
         }
 
-        public SudokuBoard(int width, int height, int maxValue)
+        public SudokuBoard(int width, int height, int maxValue, ILanguage language)
         {
+            _lang = language;
             _maxValue = maxValue;
             _tiles = new SudokuTile[width, height];
             CreateTiles();
@@ -43,7 +48,7 @@ namespace SudokuSolverLib
                 SetupLineRules();
         }
 
-        public SudokuBoard(int width, int height) : this(width, height, Math.Max(width, height))
+        public SudokuBoard(int width, int height, ILanguage language) : this(width, height, Math.Max(width, height), language)
         {
         }
 
@@ -54,7 +59,7 @@ namespace SudokuSolverLib
         private void CreateTiles()
         {
             foreach (var pos in SudokuFactory.Box(_tiles.GetLength(0), _tiles.GetLength(1)))
-                _tiles[pos.Item1, pos.Item2] = new SudokuTile(pos.Item1, pos.Item2, _maxValue);
+                _tiles[pos.Item1, pos.Item2] = new SudokuTile(pos.Item1, pos.Item2, _maxValue, _lang);
         }
 
         private void SetupLineRules()
@@ -63,12 +68,12 @@ namespace SudokuSolverLib
             for (var x = 0; x < Width; x++)
             {
                 var row = GetCol(x);
-                _rules.Add(new SudokuRule(row, "Row " + x));
+                _rules.Add(new SudokuRule(row, _lang.GetWord("Row") + x)); 
             }
             for (var y = 0; y < Height; y++)
             {
                 var col = GetRow(y);
-                _rules.Add(new SudokuRule(col, "Col " + y));
+                _rules.Add(new SudokuRule(col, _lang.GetWord("Col") + y));
             }
         }
 
@@ -128,15 +133,15 @@ namespace SudokuSolverLib
                 yield break;
             }
 
-            Console.WriteLine("SudokuTile: " + chosen);
+            Console.WriteLine(_lang.GetWord("SudokuTile") + chosen);
 
             foreach (var value in Enumerable.Range(1, _maxValue))
             {
                 // Iterate through all the valid possibles on the chosen square and pick a number for it
                 if (!chosen.IsValuePossible(value))
                     continue;
-                var copy = new SudokuBoard(this);
-                copy.Tile(chosen.X, chosen.Y).Fix(value, "Trial and error");
+                var copy = new SudokuBoard(this, _lang);
+                copy.Tile(chosen.X, chosen.Y).Fix(value, _lang.GetWord("TryAndError"));
                 foreach (var innerSolution in copy.Solve())
                     yield return innerSolution;
             }
@@ -193,7 +198,7 @@ namespace SudokuSolverLib
             return !valid
                 ? SudokuProgress.Failed
                 : _rules.Aggregate(SudokuProgress.NoProgress,
-                    (current, rule) => SudokuTile.CombineSolvedState(current, rule.Solve()));
+                    (current, rule) => SudokuTile.CombineSolvedState(current, rule.Solve(_lang)));
         }
 
         internal void AddBoxesCount(int boxesX, int boxesY)
@@ -205,7 +210,7 @@ namespace SudokuSolverLib
             foreach (var pos in boxes)
             {
                 var boxTiles = TileBox(pos.Item1 * sizeX, pos.Item2 * sizeY, sizeX, sizeY);
-                CreateRule("Box at (" + pos.Item1 + ", " + pos.Item2 + ")", boxTiles);
+                CreateRule(_lang.GetWord("BoxAt") + pos.Item1 + ", " + pos.Item2 + ")", boxTiles);
             }
         }
 

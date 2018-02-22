@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Languages.Interfaces;
 
 namespace SudokuSolverLib
 {
@@ -55,7 +56,7 @@ namespace SudokuSolverLib
                 (current, tile) => SudokuTile.CombineSolvedState(current, tile.RemovePossibles(existingNumbers)));
         }
 
-        private SudokuProgress CheckForOnlyOnePossibility()
+        private SudokuProgress CheckForOnlyOnePossibility(ILanguage language)
         {
             // Check if there is only one number within this rule that can have a specific value
             IList<int> existingNumbers = _tiles.Select(tile => tile.Value).Distinct().ToList();
@@ -70,18 +71,18 @@ namespace SudokuSolverLib
                     return SudokuProgress.Failed;
                 if (possibles.Count == 1)
                 {
-                    possibles.First().Fix(value, "Only possible in rule " + ToString());
+                    possibles.First().Fix(value, language.GetWord("OnlyPossibleInRule") + ToString()); //, ILanguage language
                     result = SudokuProgress.Progress;
                 }
             }
             return result;
         }
 
-        internal SudokuProgress Solve()
+        internal SudokuProgress Solve(ILanguage language)
         {
             // If both are null, return null (indicating no change). If one is null, return the other. Else return result1 && result2
             var result1 = RemovePossibles();
-            var result2 = CheckForOnlyOnePossibility();
+            var result2 = CheckForOnlyOnePossibility(language);
             return SudokuTile.CombineSolvedState(result1, result2);
         }
 

@@ -3,49 +3,75 @@ using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using Languages.Implementation;
+using Languages.Interfaces;
 using SudokuSolverLib;
 
 namespace SudokuSolver
 {
     public partial class Main : Form
     {
+        private readonly ILanguageManager _lm = new LanguageManager();
+        private ILanguage _lang;
+
         public Main()
         {
             InitializeComponent();
+            InitializeLanguageManager();
+            LoadLanguagesToCombo();
             LoadTitleAndDescription();
+        }
+
+        private void InitializeLanguageManager()
+        {
+            _lm.SetCurrentLanguage("de-DE");
+            _lm.OnLanguageChanged += OnLanguageChanged;
+        }
+
+        private void LoadLanguagesToCombo()
+        {
+            foreach (var lang in _lm.GetLanguages())
+                comboBoxLanguages.Items.Add(lang.Name);
+            comboBoxLanguages.SelectedIndex = 0;
+        }
+
+        private void OnLanguageChanged(object sender, EventArgs eventArgs)
+        {
+            _lang = _lm.GetCurrentLanguage();
+            labelSelectLanguage.Text = _lang.GetWord("SelectLanguage");
         }
 
         private void LoadTitleAndDescription()
         {
-            Text = Application.ProductName + @" " + Application.ProductVersion;
+            Text = Application.ProductName + _lang.GetWord("Empty") + Application.ProductVersion;
         }
 
         private void CompleteSolve(SudokuBoard board)
         {
             var dialog = new SolverDialog();
             dialog.Show();
-            dialog.WriteLine("Rules:");
-            var rules = board.OutputRulesToDialog();
+            dialog.WriteLine(_lang.GetWord("Rules"));
+             var rules = board.OutputRulesToDialog();
             dialog.WriteLine(rules);
-            dialog.WriteLine("Board:");
+            dialog.WriteLine(_lang.GetWord("Board"));
             var outputSolution = board.OutputSolution();
             dialog.WriteLine(outputSolution);
             var solutions = board.Solve().ToList();
-            dialog.WriteLine("Base Board Progress:");
+            dialog.WriteLine(_lang.GetWord("BaseBoardProgress"));
             dialog.WriteLine(outputSolution);
-            dialog.WriteLine("--");
-            dialog.WriteLine("--");
-            dialog.WriteLine("All " + solutions.Count + " solutions:");
+            dialog.WriteLine(_lang.GetWord("2Minus"));
+            dialog.WriteLine(_lang.GetWord("2Minus"));
+            dialog.WriteLine(string.Format(_lang.GetWord("AllSolutions"), solutions.Count));
             var i = 1;
             if (solutions.Count == 0)
-                MessageBox.Show(@"No solution was found!", @"No solution found", MessageBoxButtons.OK,
+                MessageBox.Show(_lang.GetWord("NoSolutionText"), _lang.GetWord("NoSolutionCaption"), MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             var tiles = solutions[0].OutputTiles();
             FillTiles(tiles);
             foreach (var solution in solutions)
             {
-                dialog.WriteLine("----------------");
-                dialog.WriteLine("Solution " + i++ + " / " + solutions.Count + ":");
+                dialog.WriteLine(_lang.GetWord("16Minus"));
+                dialog.WriteLine(string.Format(_lang.GetWord("SolutionOf"), i++, solutions.Count));
                 dialog.WriteLine(solution.OutputSolution());
             }
         }
@@ -61,7 +87,7 @@ namespace SudokuSolver
                 }
                 else
                 {
-                    MessageBox.Show(@"Please fill more than 10 tiles!", @"Fill more than 10 tiles",
+                    MessageBox.Show(_lang.GetWord("FillMoreThan10Text"), _lang.GetWord("FillMoreThan10Caption"),
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 }
@@ -250,7 +276,7 @@ namespace SudokuSolver
 
         private void SolveSudoku()
         {
-            var board = SudokuFactory.ClassicWith3X3Boxes();
+            var board = SudokuFactory.ClassicWith3X3Boxes(_lang);
             board.AddRow(GetRowForSolver(1));
             board.AddRow(GetRowForSolver(2));
             board.AddRow(GetRowForSolver(3));
@@ -1054,6 +1080,12 @@ namespace SudokuSolver
                 MessageBox.Show(ex.Message, ex.Message, MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
+        }
+
+        private void ComboBoxLanguages_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _lm.SetCurrentLanguageFromName(comboBoxLanguages.SelectedItem.ToString());
+            labelSelectLanguage.Text = _lang.GetWord("SelectLanguage");
         }
     }
 }

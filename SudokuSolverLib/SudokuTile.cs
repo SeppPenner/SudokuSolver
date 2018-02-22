@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Languages.Interfaces;
 
 namespace SudokuSolverLib
 {
@@ -10,9 +11,11 @@ namespace SudokuSolverLib
         private readonly int _maxValue;
         private ISet<int> _possibleValues;
         private int _value;
+        private static ILanguage _lang;
 
-        public SudokuTile(int x, int y, int maxValue)
+        public SudokuTile(int x, int y, int maxValue, ILanguage language)
         {
+            _lang = language;
             X = x;
             Y = y;
             IsBlocked = false;
@@ -23,14 +26,14 @@ namespace SudokuSolverLib
 
         public int Value
         {
+            //_lang.GetWord("InvalidValueForA")
             get => _value;
             set
             {
                 if (value > _maxValue)
-                    throw new ArgumentOutOfRangeException("SudokuTile Value cannot be greater than " +
-                                                          _maxValue + ". Was " + value);
+                    throw new ArgumentOutOfRangeException(string.Format(_lang.GetWord("TileValueCantBeGreaterThan"), value));
                 if (value < Cleared)
-                    throw new ArgumentOutOfRangeException("SudokuTile Value cannot be zero or smaller. Was " + value);
+                    throw new ArgumentOutOfRangeException(_lang.GetWord("TileValueCantBeZeroOrSmaller") + value);
                 _value = value;
             }
         }
@@ -58,7 +61,7 @@ namespace SudokuSolverLib
                 return b;
             if (a == SudokuProgress.Progress)
                 return b == SudokuProgress.Failed ? b : a;
-            throw new InvalidOperationException("Invalid value for a");
+            throw new InvalidOperationException(_lang.GetWord("InvalidValueForA"));
         }
 
         public string ToStringSimple()
@@ -68,7 +71,7 @@ namespace SudokuSolverLib
 
         public override string ToString()
         {
-            return $"Value {Value} at pos {X}, {Y}. ";
+            return string.Format(_lang.GetWord("ValueAtPosXY"), Value, X, Y);
         }
 
         internal void ResetPossibles()
@@ -86,7 +89,7 @@ namespace SudokuSolverLib
 
         internal void Fix(int value, string reason)
         {
-            Console.WriteLine("Fixing {0} on pos {1}, {2}: {3}", value, X, Y, reason);
+            Console.WriteLine(_lang.GetWord("FixingOnPositionReason"), value, X, Y, reason);
             Value = value;
             ResetPossibles();
         }
@@ -100,7 +103,7 @@ namespace SudokuSolverLib
             var result = SudokuProgress.NoProgress;
             if (_possibleValues.Count == 1)
             {
-                Fix(_possibleValues.First(), "Only one possibility");
+                Fix(_possibleValues.First(), _lang.GetWord("OnlyOnePossibility"));
                 result = SudokuProgress.Progress;
             }
             if (_possibleValues.Count == 0)
