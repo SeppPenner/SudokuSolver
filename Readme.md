@@ -17,4 +17,5 @@ Special thanks go to [Simon Forsberg](https://github.com/Zomis).
 
 Change history
 --------------
+* **Version 1.0.0.1 (2018-02-22)** : Added languages.dll.
 * **Version 1.0.0.0 (2018-01-17)** : 1.0 release.
