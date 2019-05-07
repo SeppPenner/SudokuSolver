@@ -2,11 +2,11 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "SudokuSolver"
-#define MyAppVersion "1.0.0.1"
+#define MyAppVersion "1.0.0.2"
 #define MyAppPublisher "Hämmer Electronics"
 #define MyAppURL "www.softwareload24.de.tl"
 #define MyAppExeName "SudokuSolver.exe"
-#define MyPath "F:\TODO\Unfertig\SudokuSolver"
+#define MyPath "C:\Users\tim\Desktop\Updaten_Snyk\SudokuSolver"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
