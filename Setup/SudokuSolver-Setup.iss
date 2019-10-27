@@ -2,11 +2,11 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "SudokuSolver"
-#define MyAppVersion "1.0.0.2"
+#define MyAppVersion "1.0.1.0"
 #define MyAppPublisher "Hämmer Electronics"
 #define MyAppURL "www.softwareload24.de.tl"
 #define MyAppExeName "SudokuSolver.exe"
-#define MyPath "C:\Users\tim\Desktop\Updaten_Snyk\SudokuSolver"
+#define MyPath "C:\Users\Tim\Documents\Git\C# und VB\SudokuSolver"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -20,7 +20,7 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName={pf}\{#MyAppName}
+DefaultDirName={commonpf}\{#MyAppName}
 DisableProgramGroupPage=yes
 LicenseFile={#MyPath}\License.txt
 OutputDir={#MyPath}\Setup
@@ -37,10 +37,10 @@ Name: "german"; MessagesFile: "compiler:Languages\German.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "{#MyPath}\SudokuSolver\bin\Debug\SudokuSolver.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyPath}\SudokuSolver\bin\Debug\Languages.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyPath}\SudokuSolver\bin\Debug\SudokuSolverLib.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyPath}\SudokuSolver\bin\Debug\languages\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#MyPath}\SudokuSolver\bin\Release\SudokuSolver.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyPath}\SudokuSolver\bin\Release\Languages.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyPath}\SudokuSolver\bin\Release\SudokuSolverLib.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyPath}\SudokuSolver\bin\Release\languages\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
