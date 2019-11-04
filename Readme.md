@@ -6,7 +6,7 @@ SudokuSolver is a project written in C# 4.8. The software is used to solve sudok
 [![GitHub issues](https://img.shields.io/github/issues/SeppPenner/SudokuSolver.svg)](https://github.com/SeppPenner/SudokuSolver/issues)
 [![GitHub forks](https://img.shields.io/github/forks/SeppPenner/SudokuSolver.svg)](https://github.com/SeppPenner/SudokuSolver/network)
 [![GitHub stars](https://img.shields.io/github/stars/SeppPenner/SudokuSolver.svg)](https://github.com/SeppPenner/SudokuSolver/stargazers)
-[![GitHub license](https://img.shields.io/badge/license-AGPL-blue.svg)](https://raw.githubusercontent.com/SeppPenner/SudokuSolver/master/License.txt)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://raw.githubusercontent.com/SeppPenner/SudokuSolver/master/License.txt)
 [![Known Vulnerabilities](https://snyk.io/test/github/SeppPenner/SudokuSolver/badge.svg)](https://snyk.io/test/github/SeppPenner/SudokuSolver)
 
 ## Screenshots from the GUI
