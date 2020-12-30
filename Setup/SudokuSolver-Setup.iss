@@ -2,11 +2,10 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "SudokuSolver"
-#define MyAppVersion "1.0.1.0"
+#define MyAppVersion "1.0.3.0"
 #define MyAppPublisher "Hämmer Electronics"
 #define MyAppURL "www.softwareload24.de.tl"
 #define MyAppExeName "SudokuSolver.exe"
-#define MyPath "C:\Users\Tim\Documents\Git\C# und VB\SudokuSolver"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -22,10 +21,10 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName={commonpf}\{#MyAppName}
 DisableProgramGroupPage=yes
-LicenseFile={#MyPath}\License.txt
-OutputDir={#MyPath}\Setup
+LicenseFile=..\src\SudokuSolver\License.txt
+OutputDir=..\Setup
 OutputBaseFilename=SudokuSolver-Setup
-SetupIconFile={#MyPath}\Solve.ico
+SetupIconFile=..\src\SudokuSolver\Solve.ico
 Compression=lzma
 SolidCompression=yes
 
@@ -37,10 +36,12 @@ Name: "german"; MessagesFile: "compiler:Languages\German.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "{#MyPath}\SudokuSolver\bin\Release\SudokuSolver.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyPath}\SudokuSolver\bin\Release\Languages.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyPath}\SudokuSolver\bin\Release\SudokuSolverLib.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyPath}\SudokuSolver\bin\Release\languages\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\src\SudokuSolver\bin\Release\net5.0-windows\SudokuSolver.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\src\SudokuSolver\bin\Release\net5.0-windows\SudokuSolver.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\src\SudokuSolver\bin\Release\net5.0-windows\Languages.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\src\SudokuSolver\bin\Release\net5.0-windows\License.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\src\SudokuSolver\bin\Release\net5.0-windows\SudokuSolverLib.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\src\SudokuSolver\bin\Release\net5.0-windows\languages\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
