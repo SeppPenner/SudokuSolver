@@ -1253,7 +1253,7 @@
             this.buttonSolve.TabIndex = 17;
             this.buttonSolve.Text = "Solve";
             this.buttonSolve.UseVisualStyleBackColor = true;
-            this.buttonSolve.Click += new System.EventHandler(this.ButtonSolve_Click);
+            this.buttonSolve.Click += new System.EventHandler(this.ButtonSolveClick);
             // 
             // buttonReset
             // 
@@ -1265,7 +1265,7 @@
             this.buttonReset.TabIndex = 18;
             this.buttonReset.Text = "Reset";
             this.buttonReset.UseVisualStyleBackColor = true;
-            this.buttonReset.Click += new System.EventHandler(this.ButtonReset_Click);
+            this.buttonReset.Click += new System.EventHandler(this.ButtonResetClick);
             // 
             // tableLayoutPanelTop
             // 
@@ -1291,7 +1291,7 @@
             this.comboBoxLanguages.Name = "comboBoxLanguages";
             this.comboBoxLanguages.Size = new System.Drawing.Size(157, 21);
             this.comboBoxLanguages.TabIndex = 0;
-            this.comboBoxLanguages.SelectedIndexChanged += new System.EventHandler(this.ComboBoxLanguages_SelectedIndexChanged);
+            this.comboBoxLanguages.SelectedIndexChanged += new System.EventHandler(this.ComboBoxLanguagesSelectedIndexChanged);
             // 
             // labelSelectLanguage
             // 
