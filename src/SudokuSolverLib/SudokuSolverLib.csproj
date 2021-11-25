@@ -14,10 +14,4 @@
 	<PackageReference Include="HaemmerElectronics.SeppPenner.Language" Version="1.0.11" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="License.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>
