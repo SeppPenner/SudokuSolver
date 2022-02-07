@@ -11,7 +11,6 @@ namespace SudokuSolverLib
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     using Languages.Interfaces;
@@ -29,7 +28,7 @@ namespace SudokuSolverLib
         /// <summary>
         /// The language.
         /// </summary>
-        private static ILanguage language;
+        private static ILanguage? language;
 
         /// <summary>
         /// The maximum value.
@@ -72,6 +71,11 @@ namespace SudokuSolverLib
             get => this.value;
             set
             {
+                if (language is null)
+                {
+                    return;
+                }
+
                 if (value > this.maximumValue)
                 {
                     throw new ArgumentOutOfRangeException(string.Format(language.GetWord("TileValueCantBeGreaterThan"), value));
@@ -139,6 +143,11 @@ namespace SudokuSolverLib
         /// <returns>The object as <see cref="string"/>.</returns>
         public override string ToString()
         {
+            if (language is null)
+            {
+                return string.Empty;
+            }
+
             return string.Format(language.GetWord("ValueAtPosXY"), this.Value, this.X, this.Y);
         }
 
@@ -175,13 +184,17 @@ namespace SudokuSolverLib
                 return b == SudokuProgress.Failed ? b : a;
             }
 
+            if (language is null)
+            {
+                return SudokuProgress.Failed;
+            }
+
             throw new InvalidOperationException(language.GetWord("InvalidValueForA"));
         }
 
         /// <summary>
         /// Resets the possibles.
         /// </summary>
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
         internal void ResetPossibles()
         {
             this.possibleValues.Clear();
@@ -201,6 +214,11 @@ namespace SudokuSolverLib
         /// <param name="reason">The reason.</param>
         internal void Fix(int valueParam, string reason)
         {
+            if (language is null)
+            {
+                return;
+            }
+
             Console.WriteLine(language.GetWord("FixingOnPositionReason"), valueParam, this.X, this.Y, reason);
             this.Value = valueParam;
             this.ResetPossibles();
@@ -211,7 +229,6 @@ namespace SudokuSolverLib
         /// </summary>
         /// <param name="existingNumbers">The existing numbers.</param>
         /// <returns>The <see cref="SudokuProgress"/>.</returns>
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
         internal SudokuProgress RemovePossibles(IEnumerable<int> existingNumbers)
         {
             if (this.IsBlocked)
@@ -222,8 +239,14 @@ namespace SudokuSolverLib
             // Takes the current possible values and removes the ones existing in `existingNumbers`
             this.possibleValues = new HashSet<int>(this.possibleValues.Where(x => !existingNumbers.Contains(x)));
             var result = SudokuProgress.NoProgress;
+
             if (this.possibleValues.Count == 1)
             {
+                if (language is null)
+                {
+                    return SudokuProgress.Failed;
+                }
+
                 this.Fix(this.possibleValues.First(), language.GetWord("OnlyOnePossibility"));
                 result = SudokuProgress.Progress;
             }

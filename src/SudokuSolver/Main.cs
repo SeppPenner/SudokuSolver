@@ -33,7 +33,7 @@ namespace SudokuSolver
         /// <summary>
         /// The language.
         /// </summary>
-        private ILanguage language;
+        private ILanguage? language;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Main"/> class.
@@ -135,6 +135,11 @@ namespace SudokuSolver
         /// </summary>
         private void LoadTitleAndDescription()
         {
+            if (this.language is null)
+            {
+                return;
+            }
+
             this.Text = Application.ProductName + this.language.GetWord("Empty") + Application.ProductVersion;
         }
 
@@ -146,6 +151,12 @@ namespace SudokuSolver
         {
             var dialog = new SolverDialog();
             dialog.Show();
+
+            if (this.language is null)
+            {
+                return;
+            }
+
             dialog.WriteLine(this.language.GetWord("Rules"));
             var rules = board.OutputRulesToDialog();
             dialog.WriteLine(rules);
@@ -196,6 +207,11 @@ namespace SudokuSolver
                 }
                 else
                 {
+                    if (this.language is null)
+                    {
+                        return;
+                    }
+
                     MessageBox.Show(
                         this.language.GetWord("FillMoreThan10Text"),
                         this.language.GetWord("FillMoreThan10Caption"),
@@ -390,6 +406,11 @@ namespace SudokuSolver
         /// </summary>
         private void SolveSudoku()
         {
+            if (this.language is null)
+            {
+                return;
+            }
+
             var board = SudokuFactory.ClassicWith3X3Boxes(this.language);
             board.AddRow(this.GetRowForSolver(1));
             board.AddRow(this.GetRowForSolver(2));
@@ -1830,6 +1851,12 @@ namespace SudokuSolver
         private void ComboBoxLanguagesSelectedIndexChanged(object sender, EventArgs e)
         {
             this.languageManager.SetCurrentLanguageFromName(this.comboBoxLanguages.SelectedItem.ToString());
+
+            if (this.language is null)
+            {
+                return;
+            }
+
             this.labelSelectLanguage.Text = this.language.GetWord("SelectLanguage");
         }
     }

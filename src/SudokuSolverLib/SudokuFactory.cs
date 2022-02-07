@@ -43,7 +43,7 @@ namespace SudokuSolverLib
         /// <summary>
         /// The language.
         /// </summary>
-        private static ILanguage language;
+        private static ILanguage? language;
 
         /// <summary>
         /// Boxes the values.
@@ -67,7 +67,6 @@ namespace SudokuSolverLib
         /// </summary>
         /// <param name="languageParam">The language.</param>
         /// <returns>The <see cref="SudokuBoard"/>.</returns>
-        // ReSharper disable once UnusedMember.Global
         public static SudokuBoard Samurai(ILanguage languageParam)
         {
             language = languageParam;
@@ -142,7 +141,6 @@ namespace SudokuSolverLib
         /// </summary>
         /// <param name="languageParam">The language.</param>
         /// <returns>The <see cref="SudokuBoard"/>.</returns>
-        // ReSharper disable once UnusedMember.Global
         public static SudokuBoard ClassicWith3X3BoxesAndHyperRegions(ILanguage languageParam)
         {
             language = languageParam;
@@ -163,7 +161,6 @@ namespace SudokuSolverLib
         /// <param name="areas">The areas.</param>
         /// <param name="languageParam">The language.</param>
         /// <returns>The <see cref="SudokuBoard"/>.</returns>
-        // ReSharper disable once UnusedMember.Global
         public static SudokuBoard ClassicWithSpecialBoxes(string[] areas, ILanguage languageParam)
         {
             language = languageParam;
