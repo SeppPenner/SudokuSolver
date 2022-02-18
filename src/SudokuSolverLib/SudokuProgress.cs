@@ -1,4 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="SudokuProgress.cs" company="Hämmer Electronics">
 //   Copyright (c) All rights reserved.
 // </copyright>
@@ -7,26 +7,25 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SudokuSolverLib
+namespace SudokuSolverLib;
+
+/// <summary>
+/// The sudoku progress enumeration.
+/// </summary>
+public enum SudokuProgress
 {
     /// <summary>
-    /// The sudoku progress enumeration.
+    /// The failed sudoku progress.
     /// </summary>
-    public enum SudokuProgress
-    {
-        /// <summary>
-        /// The failed sudoku progress.
-        /// </summary>
-        Failed,
+    Failed,
 
-        /// <summary>
-        /// The no progress sudoku progress.
-        /// </summary>
-        NoProgress,
+    /// <summary>
+    /// The no progress sudoku progress.
+    /// </summary>
+    NoProgress,
 
-        /// <summary>
-        /// The progress sudoku progress.
-        /// </summary>
-        Progress
-    }
+    /// <summary>
+    /// The progress sudoku progress.
+    /// </summary>
+    Progress
 }

@@ -1,4 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="SolverDialog.cs" company="Hämmer Electronics">
 //   Copyright (c) All rights reserved.
 // </copyright>
@@ -7,40 +7,36 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SudokuSolver
+namespace SudokuSolver;
+
+/// <summary>
+/// The solver dialog.
+/// </summary>
+public partial class SolverDialog : Form
 {
-    using System;
-    using System.Windows.Forms;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SolverDialog"/> class.
+    /// </summary>
+    public SolverDialog()
+    {
+        this.InitializeComponent();
+        this.LoadTitleAndDescription();
+    }
 
     /// <summary>
-    /// The solver dialog.
+    /// Writes a line.
     /// </summary>
-    public partial class SolverDialog : Form
+    /// <param name="text">The text.</param>
+    public void WriteLine(string text)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SolverDialog"/> class.
-        /// </summary>
-        public SolverDialog()
-        {
-            this.InitializeComponent();
-            this.LoadTitleAndDescription();
-        }
+        this.richTextBoxLogging.AppendText(text + Environment.NewLine);
+    }
 
-        /// <summary>
-        /// Writes a line.
-        /// </summary>
-        /// <param name="text">The text.</param>
-        public void WriteLine(string text)
-        {
-            this.richTextBoxLogging.AppendText(text + Environment.NewLine);
-        }
-
-        /// <summary>
-        /// Loads the title and description.
-        /// </summary>
-        private void LoadTitleAndDescription()
-        {
-            this.Text = Application.ProductName + @" " + Application.ProductVersion;
-        }
+    /// <summary>
+    /// Loads the title and description.
+    /// </summary>
+    private void LoadTitleAndDescription()
+    {
+        this.Text = Application.ProductName + @" " + Application.ProductVersion;
     }
 }
