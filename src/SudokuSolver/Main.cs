@@ -1838,7 +1838,7 @@ public partial class Main : Form
     /// <param name="e">The event args.</param>
     private void ComboBoxLanguagesSelectedIndexChanged(object sender, EventArgs e)
     {
-        var selectedItem = this.comboBoxLanguages.SelectedItem.ToString();
+        var selectedItem = this.comboBoxLanguages.SelectedItem?.ToString();
 
         if (string.IsNullOrWhiteSpace(selectedItem))
         {
