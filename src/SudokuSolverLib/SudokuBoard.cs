@@ -238,12 +238,14 @@ public class SudokuBoard
     /// <returns>The output rules as <see cref="string"/>.</returns>
     public string OutputRulesToDialog()
     {
+        var builder = new StringBuilder();
+
         foreach (var rule in this.rules)
         {
-            return string.Join(",", rule) + " - " + rule;
+            builder.AppendLine(string.Join(",", rule) + " - " + rule);
         }
 
-        return string.Empty;
+        return builder.ToString();
     }
 
     /// <summary>
@@ -308,14 +310,14 @@ public class SudokuBoard
         // Create rules for rows and columns
         for (var x = 0; x < this.Width; x++)
         {
-            var row = this.GetCol(x);
-            this.rules.Add(new SudokuRule(row, this.language.GetWord("Row") + x)); 
+            var column = this.GetCol(x);
+            this.rules.Add(new SudokuRule(column, this.language.GetWord("Col") + x));
         }
 
         for (var y = 0; y < this.Height; y++)
         {
-            var col = this.GetRow(y);
-            this.rules.Add(new SudokuRule(col, this.language.GetWord("Col") + y));
+            var row = this.GetRow(y);
+            this.rules.Add(new SudokuRule(row, this.language.GetWord("Row") + y));
         }
     }
 

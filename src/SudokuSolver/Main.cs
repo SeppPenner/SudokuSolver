@@ -124,12 +124,17 @@ public partial class Main : Form
     /// </summary>
     private void LoadTitleAndDescription()
     {
-        if (this.language is null)
-        {
-            return;
-        }
+        this.Text = Application.ProductName + @" " + Application.ProductVersion;
+    }
 
-        this.Text = Application.ProductName + this.language.GetWord("Empty") + Application.ProductVersion;
+    /// <summary>
+    /// Shows an error message box for an exception.
+    /// </summary>
+    /// <param name="ex">The exception.</param>
+    private void ShowError(Exception ex)
+    {
+        var text = $"{ex.Message}{Environment.NewLine}{Environment.NewLine}{ex.StackTrace}";
+        MessageBox.Show(text, this.language?.GetWord("ErrorTitle"), MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 
     /// <summary>
@@ -167,6 +172,7 @@ public partial class Main : Form
                 this.language.GetWord("NoSolutionCaption"),
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error);
+            return;
         }
 
         var tiles = solutions[0].OutputTiles();
@@ -210,7 +216,7 @@ public partial class Main : Form
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.Message, ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            this.ShowError(ex);
         }
     }
 
@@ -230,7 +236,7 @@ public partial class Main : Form
         SetTileColor(this.tile1_9);
         SetTileColor(this.tile2_1);
         SetTileColor(this.tile2_2);
-        SetTileColor(this.tile2_2);
+        SetTileColor(this.tile2_3);
         SetTileColor(this.tile2_4);
         SetTileColor(this.tile2_5);
         SetTileColor(this.tile2_6);
@@ -1827,7 +1833,7 @@ public partial class Main : Form
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.Message, ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            this.ShowError(ex);
         }
     }
 
