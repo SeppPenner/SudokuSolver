@@ -194,9 +194,12 @@ Do not silently "clean up" these, they are existing behaviour:
   to the output directory. The copies in the library project are referenced by nothing.
 - **The installer is not tracked, it hangs on the GitHub release.**
   `Setup/SudokuSolver-Setup.exe` is covered by the `*.exe` rule of the `.gitignore` and is uploaded
-  as an asset of the release for its tag. Up to version 1.0.8.0 it was committed with `git add -f`,
-  which is why the history still carries one copy per release, the self contained one of 1.0.8 alone
-  weighing 35 MB. Do not commit it again, not even with `-f`.
+  as an asset of the release for its tag. Every tag from `1.0.0` on has such a release, the
+  installers of the older ones were taken out of the history and attached afterwards. Up to version
+  1.0.8.0 the installer was committed with `git add -f`, which is why the history still carries one
+  copy per release, 45 MB of the 47 MB the repository takes up. Getting them out needs a history
+  rewrite and was deliberately not done, it would move every tag. Do not commit the installer again,
+  not even with `-f`.
 - **AppVeyor badge without CI in the repository.** `Readme.md` links an AppVeyor build that is
   configured outside of this repository. There is no pipeline file here.
 - **`src/SudokuSolver.sln.DotSettings`** is tracked and holds nothing but a ReSharper user
