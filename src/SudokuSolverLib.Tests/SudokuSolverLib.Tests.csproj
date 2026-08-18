@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Library</OutputType>
+        <TargetFramework>net10.0</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <NoWarn>NU1803</NoWarn>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <NuGetAuditMode>all</NuGetAuditMode>
+        <NuGetAudit>true</NuGetAudit>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="GitVersion.MsBuild" Version="6.8.2">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.8.1" />
+        <PackageReference Include="MSTest.TestAdapter" Version="4.3.3" />
+        <PackageReference Include="MSTest.TestFramework" Version="4.3.3" />
+        <PackageReference Include="coverlet.collector" Version="10.0.1">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\SudokuSolverLib\SudokuSolverLib.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <!-- Every part of the library needs an ILanguage, so the tests load the language files that ship with
+             the application. The language library looks for a folder named languages next to its own assembly,
+             which is the test output directory here. Linking the files instead of copying them keeps one source
+             of truth and lets the tests fail when a key is missing from a language file. -->
+        <None Include="..\SudokuSolver\languages\de-DE.xml" Link="languages\de-DE.xml">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Include="..\SudokuSolver\languages\en-US.xml" Link="languages\en-US.xml">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
+</Project>

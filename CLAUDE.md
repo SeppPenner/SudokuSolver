@@ -11,12 +11,13 @@ repository is an application, it is **not** published as a NuGet package: no
 `GeneratePackageOnBuild`, no push script. It ships as an Inno Setup installer that is tracked in
 this repository.
 
-One solution `src/SudokuSolver.sln` with exactly two projects:
+One solution `src/SudokuSolver.sln` with exactly three projects:
 
 - `src/SudokuSolver/SudokuSolver.csproj`, `OutputType` `WinExe`, `TargetFramework`
-  `net9.0-windows`, the application.
+  `net10.0-windows`, the application.
 - `src/SudokuSolverLib/SudokuSolverLib.csproj`, `OutputType` `Library`, `TargetFramework`
-  `net9.0`, the solver.
+  `net10.0`, the solver.
+- `src/SudokuSolverLib.Tests/SudokuSolverLib.Tests.csproj`, MSTest, added in version 1.0.8.0.
 
 Layout inside `src/SudokuSolver`:
 
@@ -43,6 +44,27 @@ Layout inside `src/SudokuSolverLib`:
   `ClassicWithSpecialBoxes`.
 - `GlobalUsings.cs`: all usings of the project.
 
+Layout inside `src/SudokuSolverLib.Tests`:
+
+- `SudokuBoardTests.cs`: the size of a classic board, `AddRow` and `OutputSolution`, the slash that
+  blocks a tile, the one solution of a proper sudoku, an already solved board, a contradicting board
+  and the rule listing.
+- `SudokuTileTests.cs`: the state of a new tile, the allowed range, zero as the empty tile, a blocked
+  tile and the tile text that comes out of the language file.
+- `SudokuFactoryTests.cs`: the order of `Box`, the 27 rules of a classic board, the four hyper
+  regions, the areas of a board that is wider than it is high and the blocked areas of the samurai
+  board.
+- `LanguageFileTests.cs`: the keys the library needs, the two language files against each other and
+  the placeholders of the format strings.
+- `TestDataProvider.cs`: the language and the puzzles that the test classes share. The classic puzzle
+  and its solution are the ones from the Wikipedia article.
+- `GlobalUsings.cs`: all usings of the test project.
+
+The test project holds no language files of its own. It links
+`src/SudokuSolver/languages/*.xml` into its output directory, because the language library looks for
+a folder named `languages` next to its own assembly. That is deliberate: a key that is missing in
+the files the application ships makes the tests fail.
+
 Repository root: `Readme.md` (the only user documentation), `Changelog.md`, `License.txt` (MIT),
 `Screenshot.PNG` (linked from the Readme), `.gitignore`, `.gitattributes` and the `Setup` folder
 with the Inno Setup script, the batch file that publishes the application and the tracked
@@ -54,11 +76,15 @@ installer. There is no `Updating.md`, no `HowToUse.md` and no `.github` folder.
 dotnet build src/SudokuSolver.sln -c Release
 ```
 
+```powershell
+dotnet test src/SudokuSolver.sln -c Release
+```
+
 - Single target framework per project, no multi-targeting. `RuntimeIdentifiers win-x64` is set in
   the application project only.
-- All build properties live directly in the two `.csproj` files and are duplicated there. There is
+- All build properties live directly in the three `.csproj` files and are duplicated there. There is
   **no** `Directory.Build.props` in this repository.
-- `TreatWarningsAsErrors` is enabled in both projects, so every warning breaks the build, NuGet
+- `TreatWarningsAsErrors` is enabled in all projects, so every warning breaks the build, NuGet
   warnings (`NU****`) from restore included. A clean build reports zero warnings, keep it that way.
 - `NU1803` (HTTP source usage during restore) is the one warning suppressed via `NoWarn`. Fix
   warnings instead of extending that list. `NuGetAudit` and `NuGetAuditMode=all` are on, so a
@@ -68,8 +94,18 @@ dotnet build src/SudokuSolver.sln -c Release
 - Restore needs nuget.org. Several private feeds are configured globally on this machine. If one of
   them answers 404 for public packages, restore fails with `NU1301`, then build with an explicit
   source: `dotnet build src/SudokuSolver.sln --source https://api.nuget.org/v3/index.json`.
-- There are no tests in this repository. A behaviour change is verified by running the application
-  and solving a sudoku, and by checking the solver log window.
+- Tests are MSTest, in the single test project `src/SudokuSolverLib.Tests`, which follows the same
+  package set as the sibling repositories: `Microsoft.NET.Test.Sdk`, `MSTest.TestAdapter`,
+  `MSTest.TestFramework`, `coverlet.collector` and `GitVersion.MsBuild`. `dotnet test` runs 24 tests,
+  they need no network and write nothing outside the output directory. Never claim a test run
+  happened without running it.
+- MSTest 4 takes the needle first: `Assert.Contains(substring, value)`,
+  `Assert.StartsWith(prefix, value)`, `Assert.DoesNotContain(substring, value)`. The old
+  `StringAssert` order was the other way round, so a mechanical rewrite silently inverts the check.
+  `Assert.ThrowsExactly<T>`, `Assert.HasCount` and `Assert.IsEmpty` are the current spellings.
+- The tests cover the solver library. The Windows Forms code around it has no tests, so a behaviour
+  change in `Main.cs` is verified by running the application, solving a sudoku and looking at the
+  solver log window.
 
 ## Code conventions
 
@@ -113,19 +149,22 @@ Do not silently "clean up" these, they are existing behaviour:
 - **The language is a static field in the library.** `SudokuTile.language` and
   `SudokuFactory.language` are `static`, and they are assigned in the `SudokuTile` constructor and
   in every factory method. The last caller wins for every tile that exists, so two boards with two
-  different languages cannot coexist. The application only ever uses one language at a time.
+  different languages cannot coexist. The application only ever uses one language at a time, and the
+  tests rely on MSTest running them one after another, so do not switch the test project to parallel
+  execution.
 - **`GetWord` returns `null` for an unknown key and does not fall back to another language.** Both
   language files must therefore contain the same keys. Most call sites end in `?? string.Empty`,
   the ones that concatenate with `+` silently produce a shorter string instead.
-- **The window title separator comes out of the language file.** `LoadTitleAndDescription` builds
-  the title as `Application.ProductName + GetWord("Empty") + Application.ProductVersion`, so a key
-  named `Empty` is expected to hold a single space. `ProductVersion` is the GitVersion
-  informational version, which is why the title reads `SudokuSolver 1.0.8-1+Branch.master.Sha...`
-  on an untagged commit.
-- **The language files are almost empty.** `Main.cs` and the library ask for 36 keys, both language
-  files contain exactly one of them, `SelectLanguage`. Every other key returns `null`, so the
-  message boxes, the solver log and the rule descriptions come out blank and the window title has
-  no space between name and version.
+- **The window title carries the GitVersion informational version.** `LoadTitleAndDescription`
+  builds it as `Application.ProductName + " " + Application.ProductVersion`, the same way
+  `SolverDialog` does, which is why the title reads
+  `SudokuSolver 1.0.8-1+Branch.master.Sha...` on an untagged commit. Up to version 1.0.7.0 the
+  separator came from a language key named `Empty` that no language file ever defined.
+- **The language files hold 36 keys and are the contract of both projects.** Every key that appears
+  in a `GetWord` call has to exist in `de-DE.xml` and in `en-US.xml`. `LanguageFileTests` checks
+  that for the keys the library uses, the keys of the application are not covered by a test.
+  Values such as `Zeile ` end in a space on purpose, their call sites concatenate an index onto
+  them, and `BoxAt` ends in an opening parenthesis because the closing one sits in the code.
 - **The default language is set twice.** `InitializeLanguageManager` calls
   `SetCurrentLanguage("de-DE")` before it subscribes to `OnLanguageChanged`, so that first call
   cannot reach the form and `this.language` stays `null`. What actually fills `this.language` is
