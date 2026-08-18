@@ -67,8 +67,9 @@ the files the application ships makes the tests fail.
 
 Repository root: `Readme.md` (the only user documentation), `Changelog.md`, `License.txt` (MIT),
 `Screenshot.PNG` (linked from the Readme), `.gitignore`, `.gitattributes` and the `Setup` folder
-with the Inno Setup script, the batch file that publishes the application and the tracked
-installer. There is no `Updating.md`, no `HowToUse.md` and no `.github` folder.
+with the Inno Setup script and the batch file that publishes the application. The installer that
+`ISCC.exe` writes next to them is ignored by git and belongs to the GitHub release of its tag. There
+is no `Updating.md`, no `HowToUse.md` and no `.github` folder.
 
 ## Build
 
@@ -191,9 +192,11 @@ Do not silently "clean up" these, they are existing behaviour:
   `src/SudokuSolver/License.txt` and `src/SudokuSolverLib/License.txt`. Only the copies below
   `src/SudokuSolver` are used, as `ApplicationIcon`, as installer `LicenseFile` and as a file copied
   to the output directory. The copies in the library project are referenced by nothing.
-- **The installer is tracked although `.gitignore` excludes `*.exe`.**
-  `Setup/SudokuSolver-Setup.exe` is in the repository and has to be added with `git add -f` after
-  every rebuild. It grows the repository by its full size with every release.
+- **The installer is not tracked, it hangs on the GitHub release.**
+  `Setup/SudokuSolver-Setup.exe` is covered by the `*.exe` rule of the `.gitignore` and is uploaded
+  as an asset of the release for its tag. Up to version 1.0.8.0 it was committed with `git add -f`,
+  which is why the history still carries one copy per release, the self contained one of 1.0.8 alone
+  weighing 35 MB. Do not commit it again, not even with `-f`.
 - **AppVeyor badge without CI in the repository.** `Readme.md` links an AppVeyor build that is
   configured outside of this repository. There is no pipeline file here.
 - **`src/SudokuSolver.sln.DotSettings`** is tracked and holds nothing but a ReSharper user
@@ -211,15 +214,27 @@ Do not silently "clean up" these, they are existing behaviour:
 4. Commit that.
 5. Tag the commit with the plain version number, no `v` prefix (`1.0.7`, `1.0.6`, ...). The existing
    tags are lightweight tags, create new ones the same way.
-6. Only now build the installer: run `Setup/build-setup-files.bat` and compile
+6. Push the commits and the tag.
+7. Only now build the installer: run `Setup/build-setup-files.bat` and compile
    `Setup/SudokuSolver-Setup.iss` with `ISCC.exe`. The tag has to exist first, otherwise GitVersion
    burns a prerelease version such as `1.0.8-1+Branch.master.Sha...` into the shipped executable.
-7. `git add -f Setup/SudokuSolver-Setup.exe`, commit it as `Updated setup.`.
-8. Push the commits and the tag.
+8. Create the GitHub release for the tag and attach
+   `Setup/SudokuSolver-Setup.exe` to it. The installer is **not** committed, see "Known quirks".
+   With the GitHub CLI that is `gh release create 1.0.8 --title 1.0.8 --notes "..."` followed by
+   `gh release upload 1.0.8 Setup/SudokuSolver-Setup.exe`. If `gh` is not installed, the REST API
+   does the same: `POST /repos/SeppPenner/SudokuSolver/releases` and then a
+   `POST https://uploads.github.com/repos/SeppPenner/SudokuSolver/releases/<id>/assets?name=SudokuSolver-Setup.exe`
+   with the file as `application/octet-stream`. The token for both comes out of the Windows
+   credential manager, the same one `git push` uses, and is never written into a file:
+
+```powershell
+$credential = "protocol=https`nhost=github.com`n`n" | git credential fill
+$token = ($credential | Select-String '^password=').ToString().Split('=', 2)[1]
+```
 
 The version in the `Changelog.md` has four parts (`1.0.8.0`), the tag has three (`1.0.8`).
 GitVersion turns the tag into the assembly version. There is no package to push, so the release
-ends with the push.
+ends with the uploaded installer.
 
 ## Git
 

@@ -12,6 +12,10 @@ SudokuSolver is a project used to solve sudokus.
 [![Patreon](https://img.shields.io/badge/Patreon-F96854?logo=patreon&logoColor=white)](https://patreon.com/SeppPennerOpenSourceDevelopment)
 [![PayPal](https://img.shields.io/badge/PayPal-00457C?logo=paypal&logoColor=white)](https://paypal.me/th070795)
 
+## Download
+The installer is attached to each [release](https://github.com/SeppPenner/SudokuSolver/releases).
+It is self contained since version 1.0.8.0, so no .NET runtime needs to be installed.
+
 ## Screenshots from the GUI
 ![Screenshot from the GUI](https://github.com/SeppPenner/SudokuSolver/blob/master/Screenshot.PNG "Screenshot from the GUI")
 
