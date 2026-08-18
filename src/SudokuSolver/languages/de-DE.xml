@@ -5,7 +5,147 @@
 	<Words>
 		<Word>
 			<Key>SelectLanguage</Key>
-			<Value>Sprache auswhählen</Value>
+			<Value>Sprache auswählen</Value>
+		</Word>
+		<Word>
+			<Key>ErrorTitle</Key>
+			<Value>Fehler</Value>
+		</Word>
+		<Word>
+			<Key>FillMoreThan10Caption</Key>
+			<Value>Zu wenige Zahlen</Value>
+		</Word>
+		<Word>
+			<Key>FillMoreThan10Text</Key>
+			<Value>Bitte mehr als zehn Felder füllen.</Value>
+		</Word>
+		<Word>
+			<Key>NoSolutionCaption</Key>
+			<Value>Keine Lösung</Value>
+		</Word>
+		<Word>
+			<Key>NoSolutionText</Key>
+			<Value>Für die eingegebenen Zahlen gibt es keine Lösung.</Value>
+		</Word>
+		<Word>
+			<Key>Rules</Key>
+			<Value>Regeln:</Value>
+		</Word>
+		<Word>
+			<Key>Board</Key>
+			<Value>Spielfeld:</Value>
+		</Word>
+		<Word>
+			<Key>BaseBoardProgress</Key>
+			<Value>Fortschritt auf dem Ausgangsfeld:</Value>
+		</Word>
+		<Word>
+			<Key>AllSolutions</Key>
+			<Value>Alle Lösungen ({0}):</Value>
+		</Word>
+		<Word>
+			<Key>SolutionOf</Key>
+			<Value>Lösung {0} von {1}:</Value>
+		</Word>
+		<Word>
+			<Key>2Minus</Key>
+			<Value>--</Value>
+		</Word>
+		<Word>
+			<Key>16Minus</Key>
+			<Value>----------------</Value>
+		</Word>
+		<Word>
+			<Key>Row</Key>
+			<Value>Zeile </Value>
+		</Word>
+		<Word>
+			<Key>Col</Key>
+			<Value>Spalte </Value>
+		</Word>
+		<Word>
+			<Key>BoxAt</Key>
+			<Value>Box bei (</Value>
+		</Word>
+		<Word>
+			<Key>Area</Key>
+			<Value>Bereich </Value>
+		</Word>
+		<Word>
+			<Key>ColumnUpper</Key>
+			<Value>Obere Spalte </Value>
+		</Word>
+		<Word>
+			<Key>ColumnLower</Key>
+			<Value>Untere Spalte </Value>
+		</Word>
+		<Word>
+			<Key>ColumnMiddle</Key>
+			<Value>Mittlere Spalte </Value>
+		</Word>
+		<Word>
+			<Key>RowLeft</Key>
+			<Value>Linke Zeile </Value>
+		</Word>
+		<Word>
+			<Key>RowRight</Key>
+			<Value>Rechte Zeile </Value>
+		</Word>
+		<Word>
+			<Key>RowMiddle</Key>
+			<Value>Mittlere Zeile </Value>
+		</Word>
+		<Word>
+			<Key>HyperA</Key>
+			<Value>Hyper-Bereich A</Value>
+		</Word>
+		<Word>
+			<Key>HyperB</Key>
+			<Value>Hyper-Bereich B</Value>
+		</Word>
+		<Word>
+			<Key>HyperC</Key>
+			<Value>Hyper-Bereich C</Value>
+		</Word>
+		<Word>
+			<Key>HyperD</Key>
+			<Value>Hyper-Bereich D</Value>
+		</Word>
+		<Word>
+			<Key>SudokuTile</Key>
+			<Value>Gewähltes Feld: </Value>
+		</Word>
+		<Word>
+			<Key>TryAndError</Key>
+			<Value>Versuch und Irrtum</Value>
+		</Word>
+		<Word>
+			<Key>OnlyOnePossibility</Key>
+			<Value>Nur eine Möglichkeit übrig</Value>
+		</Word>
+		<Word>
+			<Key>OnlyPossibleInRule</Key>
+			<Value>Nur hier möglich in Regel </Value>
+		</Word>
+		<Word>
+			<Key>FixingOnPositionReason</Key>
+			<Value>Setze {0} auf Position ({1}, {2}), Grund: {3}</Value>
+		</Word>
+		<Word>
+			<Key>ValueAtPosXY</Key>
+			<Value>{0} an Position ({1}, {2})</Value>
+		</Word>
+		<Word>
+			<Key>TileValueCantBeGreaterThan</Key>
+			<Value>Der Wert eines Feldes darf nicht größer als der Höchstwert sein: {0}</Value>
+		</Word>
+		<Word>
+			<Key>TileValueCantBeZeroOrSmaller</Key>
+			<Value>Der Wert eines Feldes darf nicht kleiner als null sein: </Value>
+		</Word>
+		<Word>
+			<Key>InvalidValueForA</Key>
+			<Value>Ungültiger Wert für a.</Value>
 		</Word>
 	</Words>
 </Language>

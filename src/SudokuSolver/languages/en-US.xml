@@ -7,5 +7,145 @@
 			<Key>SelectLanguage</Key>
 			<Value>Select the language</Value>
 		</Word>
+		<Word>
+			<Key>ErrorTitle</Key>
+			<Value>Error</Value>
+		</Word>
+		<Word>
+			<Key>FillMoreThan10Caption</Key>
+			<Value>Too few numbers</Value>
+		</Word>
+		<Word>
+			<Key>FillMoreThan10Text</Key>
+			<Value>Please fill in more than ten fields.</Value>
+		</Word>
+		<Word>
+			<Key>NoSolutionCaption</Key>
+			<Value>No solution</Value>
+		</Word>
+		<Word>
+			<Key>NoSolutionText</Key>
+			<Value>There is no solution for the given numbers.</Value>
+		</Word>
+		<Word>
+			<Key>Rules</Key>
+			<Value>Rules:</Value>
+		</Word>
+		<Word>
+			<Key>Board</Key>
+			<Value>Board:</Value>
+		</Word>
+		<Word>
+			<Key>BaseBoardProgress</Key>
+			<Value>Progress on the base board:</Value>
+		</Word>
+		<Word>
+			<Key>AllSolutions</Key>
+			<Value>All solutions ({0}):</Value>
+		</Word>
+		<Word>
+			<Key>SolutionOf</Key>
+			<Value>Solution {0} of {1}:</Value>
+		</Word>
+		<Word>
+			<Key>2Minus</Key>
+			<Value>--</Value>
+		</Word>
+		<Word>
+			<Key>16Minus</Key>
+			<Value>----------------</Value>
+		</Word>
+		<Word>
+			<Key>Row</Key>
+			<Value>Row </Value>
+		</Word>
+		<Word>
+			<Key>Col</Key>
+			<Value>Column </Value>
+		</Word>
+		<Word>
+			<Key>BoxAt</Key>
+			<Value>Box at (</Value>
+		</Word>
+		<Word>
+			<Key>Area</Key>
+			<Value>Area </Value>
+		</Word>
+		<Word>
+			<Key>ColumnUpper</Key>
+			<Value>Upper column </Value>
+		</Word>
+		<Word>
+			<Key>ColumnLower</Key>
+			<Value>Lower column </Value>
+		</Word>
+		<Word>
+			<Key>ColumnMiddle</Key>
+			<Value>Middle column </Value>
+		</Word>
+		<Word>
+			<Key>RowLeft</Key>
+			<Value>Left row </Value>
+		</Word>
+		<Word>
+			<Key>RowRight</Key>
+			<Value>Right row </Value>
+		</Word>
+		<Word>
+			<Key>RowMiddle</Key>
+			<Value>Middle row </Value>
+		</Word>
+		<Word>
+			<Key>HyperA</Key>
+			<Value>Hyper region A</Value>
+		</Word>
+		<Word>
+			<Key>HyperB</Key>
+			<Value>Hyper region B</Value>
+		</Word>
+		<Word>
+			<Key>HyperC</Key>
+			<Value>Hyper region C</Value>
+		</Word>
+		<Word>
+			<Key>HyperD</Key>
+			<Value>Hyper region D</Value>
+		</Word>
+		<Word>
+			<Key>SudokuTile</Key>
+			<Value>Chosen tile: </Value>
+		</Word>
+		<Word>
+			<Key>TryAndError</Key>
+			<Value>Trial and error</Value>
+		</Word>
+		<Word>
+			<Key>OnlyOnePossibility</Key>
+			<Value>Only one possibility left</Value>
+		</Word>
+		<Word>
+			<Key>OnlyPossibleInRule</Key>
+			<Value>Only possible here in rule </Value>
+		</Word>
+		<Word>
+			<Key>FixingOnPositionReason</Key>
+			<Value>Fixing {0} on position ({1}, {2}), reason: {3}</Value>
+		</Word>
+		<Word>
+			<Key>ValueAtPosXY</Key>
+			<Value>{0} at position ({1}, {2})</Value>
+		</Word>
+		<Word>
+			<Key>TileValueCantBeGreaterThan</Key>
+			<Value>The tile value can not be greater than the maximum value: {0}</Value>
+		</Word>
+		<Word>
+			<Key>TileValueCantBeZeroOrSmaller</Key>
+			<Value>The tile value can not be smaller than zero: </Value>
+		</Word>
+		<Word>
+			<Key>InvalidValueForA</Key>
+			<Value>Invalid value for a.</Value>
+		</Word>
 	</Words>
 </Language>
